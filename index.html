@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0B5ED7">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Take-A-Ride | Driver Scanner</title>
+  <style>
+    :root {
+      --primary: #0B5ED7;
+      --primary-dark: #004fc5;
+      --success: #198754;
+      --success-light: #d1e7dd;
+      --danger: #dc3545;
+      --danger-light: #f8d7da;
+      --warning: #ffc107;
+      --warning-light: #fff3cd;
+      --dark: #212529;
+      --gray-500: #6c757d;
+      --gray-100: #f8f9fa;
+      --gray-200: #e9ecef;
+      --gray-300: #dee2e6;
+      --radius: 16px;
+      --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      min-height: 100vh;
+      color: var(--dark);
+      line-height: 1.5;
+    }
+    
+    .logo-header {
+      background: white;
+      padding: 16px 20px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .logo-header img {
+      height: 40px;
+      width: auto;
+    }
+    
+    .logo-header .subtitle {
+      font-size: 10px;
+      color: var(--gray-500);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+    
+    .tabs {
+      display: flex;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    .tab {
+      flex: 1;
+      padding: 14px 8px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gray-500);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s ease;
+    }
+    
+    .tab.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+    
+    .tab-icon {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+    
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+    
+    .card-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+    
+    .input-group { margin-bottom: 16px; }
+    .input-label { display: block; font-size: 14px; font-weight: 600; color: var(--dark); margin-bottom: 8px; }
+    .input-field {
+      width: 100%;
+      padding: 16px;
+      border: 2px solid var(--gray-300);
+      border-radius: 12px;
+      font-size: 16px;
+      font-family: inherit;
+      transition: all 0.2s ease;
+      background: white;
+    }
+    .input-field:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(11, 94, 215, 0.1); }
+    
+    .btn {
+      width: 100%;
+      padding: 16px 24px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-success { background: var(--success); color: white; }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-secondary { background: var(--gray-200); color: var(--dark); }
+    .btn-icon { font-size: 20px; }
+    
+    #reader { width: 100%; border-radius: 12px; overflow: hidden; background: var(--dark); }
+    #reader video { width: 100% !important; height: auto !important; border-radius: 12px; }
+    
+    .result-card {
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 16px;
+      animation: slideUp 0.3s ease;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .result-valid { background: var(--success-light); border: 2px solid var(--success); }
+    .result-invalid { background: var(--danger-light); border: 2px solid var(--danger); }
+    .result-already { background: var(--warning-light); border: 2px solid var(--warning); }
+    
+    .result-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .result-icon { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+    .result-valid .result-icon { background: var(--success); color: white; }
+    .result-invalid .result-icon { background: var(--danger); color: white; }
+    .result-already .result-icon { background: var(--warning); color: var(--dark); }
+    .result-title { font-size: 20px; font-weight: 700; }
+    .result-valid .result-title { color: var(--success); }
+    .result-invalid .result-title { color: var(--danger); }
+    .result-already .result-title { color: #856404; }
+    .result-subtitle { font-size: 13px; color: var(--gray-500); }
+    
+    .details-list { background: white; border-radius: 12px; overflow: hidden; }
+    .detail-item { display: flex; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--gray-200); }
+    .detail-item:last-child { border-bottom: none; }
+    .detail-label { font-size: 14px; color: var(--gray-500); }
+    .detail-value { font-size: 14px; font-weight: 600; color: var(--dark); text-align: right; }
+    
+    .manifest-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    
+    .stat-box {
+      background: var(--gray-100);
+      border-radius: 12px;
+      padding: 16px 8px;
+      text-align: center;
+    }
+    
+    .stat-number { font-size: 28px; font-weight: 700; color: var(--primary); }
+    .stat-label { font-size: 10px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+    .stat-box.success .stat-number { color: var(--success); }
+    .stat-box.warning .stat-number { color: var(--danger); }
+    
+    .passenger-card {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      border-left: 4px solid var(--primary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .passenger-card:active { transform: scale(0.98); }
+    .passenger-card.boarded { border-left-color: var(--success); background: var(--success-light); }
+    .passenger-card.noshow { border-left-color: var(--danger); background: var(--danger-light); }
+    
+    .passenger-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .passenger-name { font-size: 16px; font-weight: 700; color: var(--dark); }
+    .passenger-status { font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
+    .status-pending { background: var(--gray-200); color: var(--gray-500); }
+    .status-boarded { background: var(--success); color: white; }
+    .status-noshow { background: var(--danger); color: white; }
+    
+    .passenger-details { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; font-size: 13px; color: var(--gray-500); }
+    .passenger-detail span { font-weight: 600; color: var(--dark); }
+    
+    .loading { text-align: center; padding: 40px; }
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid var(--gray-300);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { font-size: 14px; color: var(--gray-500); }
+    
+    .success-message {
+      background: var(--success-light);
+      border: 2px solid var(--success);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      text-align: center;
+      animation: slideUp 0.3s ease;
+    }
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      background: var(--success);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      margin: 0 auto 20px;
+      color: white;
+    }
+    .success-title { font-size: 22px; font-weight: 700; color: var(--success); margin-bottom: 8px; }
+    .success-text { font-size: 14px; color: var(--gray-500); }
+    .success-time { font-size: 12px; color: var(--gray-500); margin-top: 12px; }
+    
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--dark);
+      color: white;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      z-index: 9999;
+      animation: toastIn 0.3s ease;
+      max-width: 90%;
+      text-align: center;
+    }
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+    
+    .hidden { display: none !important; }
+    .mt-16 { margin-top: 16px; }
+    
+    .footer { text-align: center; padding: 24px; color: var(--gray-500); font-size: 12px; }
+  </style>
+</head>
+<body>
+  
+  <div class="logo-header">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Takealot_logo.svg" alt="Takealot">
+    <div class="subtitle">Driver Scanner</div>
+  </div>
+  
+  <div class="tabs">
+    <div class="tab active" id="tabScanner" onclick="switchTab('scanner')">
+      <span class="tab-icon">📷</span>
+      Scanner
+    </div>
+    <div class="tab" id="tabManual" onclick="switchTab('manual')">
+      <span class="tab-icon">⌨️</span>
+      Manual
+    </div>
+    <div class="tab" id="tabManifest" onclick="switchTab('manifest')">
+      <span class="tab-icon">📋</span>
+      Manifest
+    </div>
+  </div>
+  
+  <div class="container">
+    
+    <!-- ========== SCANNER TAB ========== -->
+    <div id="scannerTab">
+      <div class="card" id="driverCardScanner">
+        <div class="card-title">Driver Identification</div>
+        <div class="input-group">
+          <label class="input-label" for="driverNameScanner">Your Name</label>
+          <input type="text" id="driverNameScanner" class="input-field" placeholder="Enter your name" autocomplete="off">
+        </div>
+        <button class="btn btn-primary" onclick="startScanner()">
+          <span class="btn-icon">📷</span>
+          Scan QR Code
+        </button>
+      </div>
+      
+      <div class="card hidden" id="scannerCard">
+        <div class="card-title">Point camera at QR code</div>
+        <div id="reader"></div>
+        <button class="btn btn-secondary" onclick="stopScanner()">
+          <span class="btn-icon">✕</span>
+          Cancel
+        </button>
+      </div>
+      
+      <div class="card hidden" id="loadingCard">
+        <div class="loading">
+          <div class="spinner"></div>
+          <div class="loading-text">Looking up booking...</div>
+        </div>
+      </div>
+      
+      <div class="hidden" id="resultCard"></div>
+      
+      <div class="hidden" id="actionCard">
+        <button class="btn btn-success" onclick="doBoard()">
+          <span class="btn-icon">✓</span>
+          Board Passenger
+        </button>
+        <button class="btn btn-danger" onclick="confirmNoShow()">
+          <span class="btn-icon">✕</span>
+          Mark No Show
+        </button>
+      </div>
+      
+      <div class="hidden" id="successCard"></div>
+      
+      <div class="hidden" id="resetCard">
+        <button class="btn btn-primary" onclick="resetUI()">
+          <span class="btn-icon">📷</span>
+          Scan Next Passenger
+        </button>
+      </div>
+    </div>
+    
+    <!-- ========== MANUAL TAB ========== -->
+    <div id="manualTab" class="hidden">
+      <div class="card" id="driverCardManual">
+        <div class="card-title">Driver Identification</div>
+        <div class="input-group">
+          <label class="input-label" for="driverNameManual">Your Name</label>
+          <input type="text" id="driverNameManual" class="input-field" placeholder="Enter your name" autocomplete="off">
+        </div>
+        <div class="input-group mt-16">
+          <div class="card-title">Enter Booking ID</div>
+          <div class="input-group">
+            <label class="input-label" for="manualId">Booking ID</label>
+            <input type="text" id="manualId" class="input-field" placeholder="TAL-260623-133052" autocomplete="off">
+          </div>
+          <button class="btn btn-primary" onclick="manualLookup()">
+            <span class="btn-icon">🔍</span>
+            Look Up Booking
+          </button>
+        </div>
+      </div>
+      
+      <div class="card hidden" id="loadingCardManual">
+        <div class="loading">
+          <div class="spinner"></div>
+          <div class="loading-text">Looking up booking...</div>
+        </div>
+      </div>
+      
+      <div class="hidden" id="resultCardManual"></div>
+      
+      <div class="hidden" id="actionCardManual">
+        <button class="btn btn-success" onclick="doBoardManual()">
+          <span class="btn-icon">✓</span>
+          Board Passenger
+        </button>
+        <button class="btn btn-danger" onclick="confirmNoShowManual()">
+          <span class="btn-icon">✕</span>
+          Mark No Show
+        </button>
+      </div>
+      
+      <div class="hidden" id="successCardManual"></div>
+      
+      <div class="hidden" id="resetCardManual">
+        <button class="btn btn-secondary" onclick="resetUIManual()">
+          <span class="btn-icon">🔄</span>
+          Look Up Another
+        </button>
+      </div>
+    </div>
+    
+    <!-- ========== MANIFEST TAB ========== -->
+    <div id="manifestTab" class="hidden">
+      <div class="card">
+        <div class="card-title">Today's Summary</div>
+        <div class="manifest-stats">
+          <div class="stat-box">
+            <div class="stat-number" id="totalCount">-</div>
+            <div class="stat-label">Total</div>
+          </div>
+          <div class="stat-box success">
+            <div class="stat-number" id="boardedCount">-</div>
+            <div class="stat-label">Boarded</div>
+          </div>
+          <div class="stat-box warning">
+            <div class="stat-number" id="pendingCount">-</div>
+            <div class="stat-label">Pending</div>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="loadManifest()">
+          <span class="btn-icon">🔄</span>
+          Refresh List
+        </button>
+      </div>
+      
+      <div class="card">
+        <div class="card-title">Passengers to Board</div>
+        <div id="manifestList">
+          <div class="loading">
+            <div class="spinner"></div>
+            <div class="loading-text">Loading manifest...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="footer">
+    <p>Take-A-Ride Transport System | Takealot Group</p>
+  </div>
+  
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <script>
+    // ============================================================
+    // API CONFIGURATION - Update this URL when you redeploy
+    // ============================================================
+    var API_URL = 'https://script.google.com/a/macros/takealot.com/s/AKfycbz7oeu0Ir-eqmb8jFT-_089uyGOR-9uqinr5LAZfBqZB4h7ePXwAS27IziMDEaP2yEp/exec';
+    
+    var html5QrCode = null;
+    var currentBookingId = "";
+    var currentResult = null;
+    var driverName = "";
+    var manifestData = [];
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      var savedDriver = localStorage.getItem('takealot_driver_name');
+      if (savedDriver) {
+        document.getElementById('driverNameScanner').value = savedDriver;
+        document.getElementById('driverNameManual').value = savedDriver;
+      }
+    });
+    
+    // ============================================================
+    // API CALL FUNCTIONS
+    // ============================================================
+    
+    function apiGet(action, params) {
+      var url = API_URL + '?action=' + action;
+      if (params) {
+        for (var key in params) {
+          url += '&' + key + '=' + encodeURIComponent(params[key]);
+        }
+      }
+      return fetch(url).then(function(r) { return r.json(); });
+    }
+    
+    function apiPost(action, data) {
+      return fetch(API_URL + '?action=' + action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      }).then(function(r) { return r.json(); });
+    }
+    
+    // ============================================================
+    // TAB SWITCHING
+    // ============================================================
+    
+    function switchTab(tab) {
+      document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+      document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+      hide('scannerTab');
+      hide('manualTab');
+      hide('manifestTab');
+      show(tab + 'Tab');
+      if (tab === 'manifest') { loadManifest(); }
+    }
+    
+    // ============================================================
+    // SCANNER FUNCTIONS
+    // ============================================================
+    
+    function startScanner() {
+      driverName = document.getElementById("driverNameScanner").value.trim();
+      if (!driverName) { showToast("Please enter your name first!"); return; }
+      localStorage.setItem('takealot_driver_name', driverName);
+      document.getElementById("driverNameManual").value = driverName;
+      show("scannerCard");
+      hide("driverCardScanner");
+      html5QrCode = new Html5Qrcode("reader");
+      
+      var config = { fps: 10, qrbox: { width: 250, height: 250 } };
+      var backCamera = { facingMode: "environment" };
+      var frontCamera = { facingMode: "user" };
+      
+      html5QrCode.start(backCamera, config, onScanSuccess, onScanFailure)
+        .catch(function(err) {
+          console.log("Back camera failed, trying front camera: " + err);
+          html5QrCode.start(frontCamera, config, onScanSuccess, onScanFailure)
+            .catch(function(err2) {
+              hide("scannerCard");
+              show("driverCardScanner");
+              showToast("Camera error: " + (err2.message || err2));
+            });
+        });
+    }
+    
+    function stopScanner() {
+      if (html5QrCode) {
+        html5QrCode.stop().then(function() {
+          html5QrCode = null;
+          hide("scannerCard");
+          show("driverCardScanner");
+        }).catch(function(e) {});
+      }
+    }
+    
+    function onScanSuccess(decodedText) {
+      html5QrCode.stop().then(function() {
+        html5QrCode = null;
+        hide("scannerCard");
+        currentBookingId = decodedText.trim().toUpperCase();
+        lookupBooking(currentBookingId, 'scanner');
+      }).catch(function(e) {});
+    }
+    function onScanFailure(error) {}
+    
+    // ============================================================
+    // LOOKUP & ACTIONS
+    // ============================================================
+    
+    function manualLookup() {
+      driverName = document.getElementById("driverNameManual").value.trim();
+      if (!driverName) { showToast("Please enter your name first!"); return; }
+      localStorage.setItem('takealot_driver_name', driverName);
+      document.getElementById("driverNameScanner").value = driverName;
+      var bookingId = document.getElementById("manualId").value.trim().toUpperCase();
+      if (!bookingId) { showToast("Please enter a Booking ID!"); return; }
+      currentBookingId = bookingId;
+      lookupBooking(bookingId, 'manual');
+    }
+    
+    function lookupBooking(bookingId, mode) {
+      showLoading(mode);
+      apiGet('lookupBooking', { bookingId: bookingId })
+        .then(function(result) {
+          hideLoading(mode);
+          currentResult = result;
+          showResult(result, mode);
+        })
+        .catch(function(err) {
+          hideLoading(mode);
+          showToast("Error: " + err.message);
+        });
+    }
+    
+    function showResult(result, mode) {
+      var card = document.getElementById("resultCard" + (mode === 'manual' ? 'Manual' : ''));
+      if (!result.found) {
+        card.className = "result-card result-invalid";
+        card.innerHTML = '<div class="result-header"><div class="result-icon">✕</div><div><div class="result-title">NOT FOUND</div><div class="result-subtitle">' + currentBookingId + '</div></div></div><p>No booking found.</p>';
+        showResultCard(card, mode);
+        showResetCard(card, mode);
+        return;
+      }
+      var alreadyBoarded = result.scannerStatus && result.scannerStatus !== '';
+      if (alreadyBoarded) {
+        card.className = "result-card result-already";
+        card.innerHTML = '<div class="result-header"><div class="result-icon">⚠️</div><div><div class="result-title">ALREADY SCANNED</div><div class="result-subtitle">' + result.bookingId + '</div></div></div><div class="details-list"><div class="detail-item"><span class="detail-label">Passenger</span><span class="detail-value">' + result.passengerName + '</span></div><div class="detail-item"><span class="detail-label">Status</span><span class="detail-value">' + result.scannerStatus + '</span></div><div class="detail-item"><span class="detail-label">Driver</span><span class="detail-value">' + result.scannerDriver + '</span></div><div class="detail-item"><span class="detail-label">Time</span><span class="detail-value">' + result.scannerTime + '</span></div></div>';
+        showResultCard(card, mode);
+        showResetCard(card, mode);
+        vibrate([200, 100, 200]);
+        return;
+      }
+      card.className = "result-card result-valid";
+      card.innerHTML = '<div class="result-header"><div class="result-icon">✓</div><div><div class="result-title">VALID BOOKING</div><div class="result-subtitle">' + result.bookingId + '</div></div></div><div class="details-list"><div class="detail-item"><span class="detail-label">Passenger</span><span class="detail-value">' + result.passengerName + '</span></div><div class="detail-item"><span class="detail-label">Brand</span><span class="detail-value">' + result.brand + '</span></div><div class="detail-item"><span class="detail-label">Department</span><span class="detail-value">' + result.department + '</span></div><div class="detail-item"><span class="detail-label">Destination</span><span class="detail-value">' + result.destination + '</span></div><div class="detail-item"><span class="detail-label">Shift End</span><span class="detail-value">' + result.shiftEnd + '</span></div><div class="detail-item"><span class="detail-label">Transport Date</span><span class="detail-value">' + result.transportDate + '</span></div></div>';
+      showResultCard(card, mode);
+      showActionCard(mode);
+      vibrate([100]);
+    }
+    
+    function showResultCard(card, mode) { hideLoading(mode); hideActionCard(mode); hideSuccessCard(mode); hideResetCard(mode); card.classList.remove('hidden'); }
+    function showActionCard(mode) { document.getElementById("actionCard" + (mode === 'manual' ? 'Manual' : '')).classList.remove('hidden'); }
+    function hideActionCard(mode) { var c = document.getElementById("actionCard" + (mode === 'manual' ? 'Manual' : '')); if (c) c.classList.add('hidden'); }
+    function showSuccessCard(mode) { document.getElementById("successCard" + (mode === 'manual' ? 'Manual' : '')).classList.remove('hidden'); }
+    function hideSuccessCard(mode) { var c = document.getElementById("successCard" + (mode === 'manual' ? 'Manual' : '')); if (c) c.classList.add('hidden'); }
+    function showResetCard(card, mode) { var r = document.getElementById("resetCard" + (mode === 'manual' ? 'Manual' : '')); if (r) r.classList.remove('hidden'); }
+    function hideResetCard(mode) { var r = document.getElementById("resetCard" + (mode === 'manual' ? 'Manual' : '')); if (r) r.classList.add('hidden'); }
+    function showLoading(mode) { document.getElementById(mode === 'manual' ? "loadingCardManual" : "loadingCard").classList.remove('hidden'); }
+    function hideLoading(mode) { document.getElementById(mode === 'manual' ? "loadingCardManual" : "loadingCard").classList.add('hidden'); }
+    
+    function doBoard() { doBoardAction('scanner'); }
+    function doBoardManual() { doBoardAction('manual'); }
+    function doBoardAction(mode) {
+      hideActionCard(mode);
+      showLoading(mode);
+      apiPost('boardPassenger', { bookingId: currentBookingId, driverName: driverName })
+        .then(function(res) {
+          hideLoading(mode);
+          if (res.success) {
+            showSuccess("✅ Boarded!", "Passenger has been marked as boarded.", "#d1e7dd", "#155724", res.timestamp, mode);
+            vibrate([100, 50, 100, 50, 200]);
+          } else {
+            showToast("Error: " + res.message);
+            showActionCard(mode);
+          }
+        })
+        .catch(function(err) {
+          hideLoading(mode);
+          showToast("Error: " + err.message);
+          showActionCard(mode);
+        });
+    }
+    
+    function confirmNoShow() { confirmNoShowAction('scanner'); }
+    function confirmNoShowManual() { confirmNoShowAction('manual'); }
+    function confirmNoShowAction(mode) {
+      if (confirm('Mark ' + currentResult.passengerName + ' as No Show?')) {
+        doNoShowAction(mode);
+      }
+    }
+    function doNoShowAction(mode) {
+      hideActionCard(mode);
+      showLoading(mode);
+      apiPost('markNoShow', { bookingId: currentBookingId, driverName: driverName })
+        .then(function(res) {
+          hideLoading(mode);
+          if (res.success) {
+            showSuccess("🔴 No Show", "Passenger has been marked as absent.", "#f8d7da", "#842029", res.timestamp, mode);
+            vibrate([200, 100, 200]);
+          } else {
+            showToast("Error: " + res.message);
+            showActionCard(mode);
+          }
+        })
+        .catch(function(err) {
+          hideLoading(mode);
+          showToast("Error: " + err.message);
+          showActionCard(mode);
+        });
+    }
+    
+    function showSuccess(title, message, bg, color, timestamp, mode) {
+      var card = document.getElementById("successCard" + (mode === 'manual' ? 'Manual' : ''));
+      card.style.background = bg;
+      card.style.color = color;
+      card.className = "success-message";
+      card.innerHTML = '<div class="success-icon">✓</div><div class="success-title">' + title + '</div><div class="success-text">' + message + '</div><div class="success-time">Time: ' + timestamp + '</div>';
+      card.classList.remove('hidden');
+      var r = document.getElementById("resetCard" + (mode === 'manual' ? 'Manual' : ''));
+      if (r) r.classList.remove('hidden');
+    }
+    
+    // ============================================================
+    // MANIFEST
+    // ============================================================
+    
+    function loadManifest() {
+      var list = document.getElementById('manifestList');
+      list.innerHTML = '<div class="loading"><div class="spinner"></div><div class="loading-text">Loading manifest...</div></div>';
+      apiGet('getTodayManifest')
+        .then(function(data) {
+          manifestData = data.bookings || [];
+          renderManifest();
+        })
+        .catch(function(err) {
+          list.innerHTML = '<p style="color:var(--danger);text-align:center;">Error: ' + err.message + '</p>';
+        });
+    }
+    
+    function renderManifest() {
+      var list = document.getElementById('manifestList');
+      var total = manifestData.length;
+      var boarded = manifestData.filter(function(b) { return b.scannerStatus && b.scannerStatus !== ''; }).length;
+      document.getElementById('totalCount').textContent = total;
+      document.getElementById('boardedCount').textContent = boarded;
+      document.getElementById('pendingCount').textContent = total - boarded;
+      if (manifestData.length === 0) {
+        list.innerHTML = '<p style="text-align:center;color:var(--gray-500);padding:20px;">No bookings for today</p>';
+        return;
+      }
+      list.innerHTML = manifestData.map(function(b) {
+        var statusClass = b.scannerStatus ? (b.scannerStatus.includes('Boarded') ? 'boarded' : 'noshow') : '';
+        var statusText = b.scannerStatus ? b.scannerStatus : 'Pending';
+        var statusBadge = b.scannerStatus ? (b.scannerStatus.includes('Boarded') ? 'status-boarded' : 'status-noshow') : 'status-pending';
+        return '<div class="passenger-card ' + statusClass + '" onclick="selectPassenger(\'' + b.bookingId + '\')"><div class="passenger-header"><div class="passenger-name">' + b.passengerName + '</div><div class="passenger-status ' + statusBadge + '">' + statusText + '</div></div><div class="passenger-details"><div class="passenger-detail"><span>Destination:</span> ' + b.destination + '</div><div class="passenger-detail"><span>Shift End:</span> ' + b.shiftEnd + '</div><div class="passenger-detail"><span>Brand:</span> ' + b.brand + '</div><div class="passenger-detail"><span>ID:</span> ' + b.bookingId + '</div></div></div>';
+      }).join('');
+    }
+    
+    function selectPassenger(bookingId) {
+      currentBookingId = bookingId;
+      document.getElementById("manualId").value = bookingId;
+      switchTab('manual');
+    }
+    
+    // ============================================================
+    // RESET & UTILITIES
+    // ============================================================
+    
+    function resetUI() { resetCommon('scanner'); show("driverCardScanner"); }
+    function resetUIManual() { resetCommon('manual'); document.getElementById("manualId").value = ""; show("driverCardManual"); }
+    function resetCommon(mode) {
+      currentBookingId = "";
+      currentResult = null;
+      var c = document.getElementById("resultCard" + (mode === 'manual' ? 'Manual' : ''));
+      if (c) c.classList.add('hidden');
+      hideActionCard(mode);
+      hideSuccessCard(mode);
+      hideResetCard(mode);
+    }
+    
+    function showToast(message) {
+      var t = document.createElement("div");
+      t.className = "toast";
+      t.textContent = message;
+      document.body.appendChild(t);
+      setTimeout(function() { t.remove(); }, 3000);
+    }
+    function vibrate(pattern) { if ('vibrate' in navigator) { navigator.vibrate(pattern); } }
+    function show(id) { document.getElementById(id).classList.remove('hidden'); }
+    function hide(id) { document.getElementById(id).classList.add('hidden'); }
+  </script>
+</body>
+</html>
