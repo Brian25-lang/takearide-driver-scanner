@@ -461,10 +461,9 @@
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <script>
     // ============================================================
-    // API CONFIGURATION - Update this URL when you redeploy
+    // API CONFIGURATION
     // ============================================================
     var API_URL = 'https://script.google.com/a/macros/takealot.com/s/AKfycbwE7ZmBjR-11792xcvyWwDoTrpE43PamnGmwSGVVl-rAkjTWYLBnE4yeYDA_nLMOXJZ/exec';
-
     
     var html5QrCode = null;
     var currentBookingId = "";
@@ -481,25 +480,51 @@
     });
     
     // ============================================================
-    // API CALL FUNCTIONS
+    // API CALL FUNCTIONS - Using XMLHttpRequest for CORS fix
     // ============================================================
     
     function apiGet(action, params) {
-      var url = API_URL + '?action=' + action;
-      if (params) {
-        for (var key in params) {
-          url += '&' + key + '=' + encodeURIComponent(params[key]);
+      return new Promise(function(resolve, reject) {
+        var url = API_URL + '?action=' + action;
+        if (params) {
+          for (var key in params) {
+            url += '&' + key + '=' + encodeURIComponent(params[key]);
+          }
         }
-      }
-      return fetch(url).then(function(r) { return r.json(); });
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.onload = function() {
+          try {
+            resolve(JSON.parse(xhr.responseText));
+          } catch (e) {
+            reject({ message: 'Failed to parse response' });
+          }
+        };
+        xhr.onerror = function() {
+          reject({ message: 'Network error: ' + xhr.statusText });
+        };
+        xhr.send();
+      });
     }
     
     function apiPost(action, data) {
-      return fetch(API_URL + '?action=' + action, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      }).then(function(r) { return r.json(); });
+      return new Promise(function(resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', API_URL + '?action=' + action, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function() {
+          try {
+            resolve(JSON.parse(xhr.responseText));
+          } catch (e) {
+            reject({ message: 'Failed to parse response' });
+          }
+        };
+        xhr.onerror = function() {
+          reject({ message: 'Network error: ' + xhr.statusText });
+        };
+        xhr.send(JSON.stringify(data));
+      });
     }
     
     // ============================================================
@@ -590,7 +615,7 @@
         })
         .catch(function(err) {
           hideLoading(mode);
-          showToast("Error: " + err.message);
+          showToast("Error: " + (err.message || JSON.stringify(err)));
         });
     }
     
@@ -647,7 +672,7 @@
         })
         .catch(function(err) {
           hideLoading(mode);
-          showToast("Error: " + err.message);
+          showToast("Error: " + (err.message || JSON.stringify(err)));
           showActionCard(mode);
         });
     }
@@ -675,7 +700,7 @@
         })
         .catch(function(err) {
           hideLoading(mode);
-          showToast("Error: " + err.message);
+          showToast("Error: " + (err.message || JSON.stringify(err)));
           showActionCard(mode);
         });
     }
@@ -704,7 +729,7 @@
           renderManifest();
         })
         .catch(function(err) {
-          list.innerHTML = '<p style="color:var(--danger);text-align:center;">Error: ' + err.message + '</p>';
+          list.innerHTML = '<p style="color:var(--danger);text-align:center;">Error: ' + (err.message || JSON.stringify(err)) + '</p>';
         });
     }
     
