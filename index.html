@@ -24,9 +24,7 @@
       --radius: 16px;
       --shadow: 0 4px 20px rgba(0,0,0,0.08);
     }
-    
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
@@ -34,7 +32,6 @@
       color: var(--dark);
       line-height: 1.5;
     }
-    
     .logo-header {
       background: white;
       padding: 16px 20px;
@@ -44,12 +41,7 @@
       top: 0;
       z-index: 100;
     }
-    
-    .logo-header img {
-      height: 40px;
-      width: auto;
-    }
-    
+    .logo-header img { height: 40px; width: auto; }
     .logo-header .subtitle {
       font-size: 10px;
       color: var(--gray-500);
@@ -57,13 +49,7 @@
       text-transform: uppercase;
       margin-top: 6px;
     }
-    
-    .tabs {
-      display: flex;
-      background: white;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-    
+    .tabs { display: flex; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
     .tab {
       flex: 1;
       padding: 14px 8px;
@@ -75,24 +61,9 @@
       border-bottom: 3px solid transparent;
       transition: all 0.2s ease;
     }
-    
-    .tab.active {
-      color: var(--primary);
-      border-bottom-color: var(--primary);
-    }
-    
-    .tab-icon {
-      display: block;
-      font-size: 22px;
-      margin-bottom: 4px;
-    }
-    
-    .container {
-      max-width: 480px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-    
+    .tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+    .tab-icon { display: block; font-size: 22px; margin-bottom: 4px; }
+    .container { max-width: 480px; margin: 0 auto; padding: 20px; }
     .card {
       background: white;
       border-radius: var(--radius);
@@ -100,7 +71,6 @@
       box-shadow: var(--shadow);
       margin-bottom: 16px;
     }
-    
     .card-title {
       font-size: 12px;
       font-weight: 700;
@@ -109,7 +79,6 @@
       letter-spacing: 1px;
       margin-bottom: 16px;
     }
-    
     .input-group { margin-bottom: 16px; }
     .input-label { display: block; font-size: 14px; font-weight: 600; color: var(--dark); margin-bottom: 8px; }
     .input-field {
@@ -123,7 +92,6 @@
       background: white;
     }
     .input-field:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(11, 94, 215, 0.1); }
-    
     .btn {
       width: 100%;
       padding: 16px 24px;
@@ -147,10 +115,8 @@
     .btn-danger { background: var(--danger); color: white; }
     .btn-secondary { background: var(--gray-200); color: var(--dark); }
     .btn-icon { font-size: 20px; }
-    
     #reader { width: 100%; border-radius: 12px; overflow: hidden; background: var(--dark); }
     #reader video { width: 100% !important; height: auto !important; border-radius: 12px; }
-    
     .result-card {
       border-radius: var(--radius);
       padding: 24px;
@@ -164,7 +130,6 @@
     .result-valid { background: var(--success-light); border: 2px solid var(--success); }
     .result-invalid { background: var(--danger-light); border: 2px solid var(--danger); }
     .result-already { background: var(--warning-light); border: 2px solid var(--warning); }
-    
     .result-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
     .result-icon { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; }
     .result-valid .result-icon { background: var(--success); color: white; }
@@ -175,32 +140,17 @@
     .result-invalid .result-title { color: var(--danger); }
     .result-already .result-title { color: #856404; }
     .result-subtitle { font-size: 13px; color: var(--gray-500); }
-    
     .details-list { background: white; border-radius: 12px; overflow: hidden; }
     .detail-item { display: flex; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--gray-200); }
     .detail-item:last-child { border-bottom: none; }
     .detail-label { font-size: 14px; color: var(--gray-500); }
     .detail-value { font-size: 14px; font-weight: 600; color: var(--dark); text-align: right; }
-    
-    .manifest-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-    
-    .stat-box {
-      background: var(--gray-100);
-      border-radius: 12px;
-      padding: 16px 8px;
-      text-align: center;
-    }
-    
+    .manifest-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+    .stat-box { background: var(--gray-100); border-radius: 12px; padding: 16px 8px; text-align: center; }
     .stat-number { font-size: 28px; font-weight: 700; color: var(--primary); }
     .stat-label { font-size: 10px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
     .stat-box.success .stat-number { color: var(--success); }
     .stat-box.warning .stat-number { color: var(--danger); }
-    
     .passenger-card {
       background: white;
       border-radius: 12px;
@@ -214,21 +164,17 @@
     .passenger-card:active { transform: scale(0.98); }
     .passenger-card.boarded { border-left-color: var(--success); background: var(--success-light); }
     .passenger-card.noshow { border-left-color: var(--danger); background: var(--danger-light); }
-    
     .passenger-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
     .passenger-name { font-size: 16px; font-weight: 700; color: var(--dark); }
     .passenger-status { font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
     .status-pending { background: var(--gray-200); color: var(--gray-500); }
     .status-boarded { background: var(--success); color: white; }
     .status-noshow { background: var(--danger); color: white; }
-    
     .passenger-details { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; font-size: 13px; color: var(--gray-500); }
     .passenger-detail span { font-weight: 600; color: var(--dark); }
-    
     .loading { text-align: center; padding: 40px; }
     .spinner {
-      width: 48px;
-      height: 48px;
+      width: 48px; height: 48px;
       border: 4px solid var(--gray-300);
       border-top-color: var(--primary);
       border-radius: 50%;
@@ -237,18 +183,14 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
     .loading-text { font-size: 14px; color: var(--gray-500); }
-    
     .success-message {
-      background: var(--success-light);
-      border: 2px solid var(--success);
       border-radius: var(--radius);
       padding: 32px 24px;
       text-align: center;
       animation: slideUp 0.3s ease;
     }
     .success-icon {
-      width: 72px;
-      height: 72px;
+      width: 72px; height: 72px;
       background: var(--success);
       border-radius: 50%;
       display: flex;
@@ -258,10 +200,9 @@
       margin: 0 auto 20px;
       color: white;
     }
-    .success-title { font-size: 22px; font-weight: 700; color: var(--success); margin-bottom: 8px; }
+    .success-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
     .success-text { font-size: 14px; color: var(--gray-500); }
     .success-time { font-size: 12px; color: var(--gray-500); margin-top: 12px; }
-    
     .toast {
       position: fixed;
       bottom: 20px;
@@ -282,20 +223,38 @@
       from { opacity: 0; transform: translateX(-50%) translateY(20px); }
       to { opacity: 1; transform: translateX(-50%) translateY(0); }
     }
-    
+
+    /* Debug panel */
+    .debug-panel {
+      background: #1e1e1e;
+      color: #00ff88;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 12px;
+      font-family: monospace;
+      font-size: 12px;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+    }
+    .debug-panel.visible { display: block; }
+    .debug-line { margin-bottom: 4px; word-break: break-all; }
+    .debug-line.error { color: #ff6b6b; }
+    .debug-line.success { color: #00ff88; }
+    .debug-line.info { color: #87ceeb; }
+
     .hidden { display: none !important; }
     .mt-16 { margin-top: 16px; }
-    
     .footer { text-align: center; padding: 24px; color: var(--gray-500); font-size: 12px; }
   </style>
 </head>
 <body>
-  
+
   <div class="logo-header">
     <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Takealot_logo.svg" alt="Takealot">
     <div class="subtitle">Driver Scanner</div>
   </div>
-  
+
   <div class="tabs">
     <div class="tab active" id="tabScanner" onclick="switchTab('scanner')">
       <span class="tab-icon">📷</span>
@@ -310,9 +269,9 @@
       Manifest
     </div>
   </div>
-  
+
   <div class="container">
-    
+
     <!-- ========== SCANNER TAB ========== -->
     <div id="scannerTab">
       <div class="card" id="driverCardScanner">
@@ -326,7 +285,7 @@
           Scan QR Code
         </button>
       </div>
-      
+
       <div class="card hidden" id="scannerCard">
         <div class="card-title">Point camera at QR code</div>
         <div id="reader"></div>
@@ -335,16 +294,16 @@
           Cancel
         </button>
       </div>
-      
+
       <div class="card hidden" id="loadingCard">
         <div class="loading">
           <div class="spinner"></div>
           <div class="loading-text">Looking up booking...</div>
         </div>
       </div>
-      
+
       <div class="hidden" id="resultCard"></div>
-      
+
       <div class="hidden" id="actionCard">
         <button class="btn btn-success" onclick="doBoard()">
           <span class="btn-icon">✓</span>
@@ -355,9 +314,9 @@
           Mark No Show
         </button>
       </div>
-      
+
       <div class="hidden" id="successCard"></div>
-      
+
       <div class="hidden" id="resetCard">
         <button class="btn btn-primary" onclick="resetUI()">
           <span class="btn-icon">📷</span>
@@ -365,7 +324,7 @@
         </button>
       </div>
     </div>
-    
+
     <!-- ========== MANUAL TAB ========== -->
     <div id="manualTab" class="hidden">
       <div class="card" id="driverCardManual">
@@ -386,16 +345,16 @@
           </button>
         </div>
       </div>
-      
+
       <div class="card hidden" id="loadingCardManual">
         <div class="loading">
           <div class="spinner"></div>
           <div class="loading-text">Looking up booking...</div>
         </div>
       </div>
-      
+
       <div class="hidden" id="resultCardManual"></div>
-      
+
       <div class="hidden" id="actionCardManual">
         <button class="btn btn-success" onclick="doBoardManual()">
           <span class="btn-icon">✓</span>
@@ -406,17 +365,23 @@
           Mark No Show
         </button>
       </div>
-      
+
       <div class="hidden" id="successCardManual"></div>
-      
+
       <div class="hidden" id="resetCardManual">
         <button class="btn btn-secondary" onclick="resetUIManual()">
           <span class="btn-icon">🔄</span>
           Look Up Another
         </button>
       </div>
+
+      <!-- Debug panel (tap version label 5× to reveal) -->
+      <div style="text-align:center;margin-top:8px;">
+        <span id="debugToggle" onclick="tapDebug()" style="font-size:11px;color:var(--gray-300);cursor:pointer;user-select:none;">v1.2.0</span>
+      </div>
+      <div id="debugPanel" class="debug-panel"></div>
     </div>
-    
+
     <!-- ========== MANIFEST TAB ========== -->
     <div id="manifestTab" class="hidden">
       <div class="card">
@@ -440,7 +405,7 @@
           Refresh List
         </button>
       </div>
-      
+
       <div class="card">
         <div class="card-title">Passengers to Board</div>
         <div id="manifestList">
@@ -451,160 +416,248 @@
         </div>
       </div>
     </div>
-    
+
   </div>
-  
+
   <div class="footer">
     <p>Take-A-Ride Transport System | Takealot Group</p>
   </div>
-  
+
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <script>
     // ============================================================
-    // API CONFIGURATION
+    // CONFIGURATION
+    // Change ONLY the API_URL if your Apps Script URL changes.
+    // DO NOT change anything else unless you know what you're doing.
     // ============================================================
-    var API_URL = 'https://script.google.com/a/macros/takealot.com/s/AKfycbwE7ZmBjR-11792xcvyWwDoTrpE43PamnGmwSGVVl-rAkjTWYLBnE4yeYDA_nLMOXJZ/exec';
-    
+    var API_URL = 'https://script.google.com/macros/s/AKfycbyNTfXX726Mtn8SoExJ0L1001gDM31WOr4o-82x5xXVgeyFBvCw6lQWhDqM2tgeGeG9eA/exec';
+
+    // ============================================================
+    // STATE
+    // ============================================================
     var html5QrCode = null;
-    var currentBookingId = "";
+    var currentBookingId = '';
     var currentResult = null;
-    var driverName = "";
+    var driverName = '';
     var manifestData = [];
-    
+    var debugTaps = 0;
+    var debugVisible = false;
+
     document.addEventListener('DOMContentLoaded', function() {
       var savedDriver = localStorage.getItem('takealot_driver_name');
       if (savedDriver) {
         document.getElementById('driverNameScanner').value = savedDriver;
         document.getElementById('driverNameManual').value = savedDriver;
       }
+      loadManifest();
     });
-    
+
     // ============================================================
-    // API CALL FUNCTIONS - Using XMLHttpRequest for CORS fix
+    // DEBUG HELPERS
     // ============================================================
-    
+    function tapDebug() {
+      debugTaps++;
+      if (debugTaps >= 5) {
+        debugVisible = !debugVisible;
+        debugTaps = 0;
+        var panel = document.getElementById('debugPanel');
+        panel.classList.toggle('visible', debugVisible);
+      }
+    }
+
+    function dbg(msg, type) {
+      var panel = document.getElementById('debugPanel');
+      var line = document.createElement('div');
+      line.className = 'debug-line ' + (type || 'info');
+      line.textContent = new Date().toLocaleTimeString() + ' ' + msg;
+      panel.appendChild(line);
+      panel.scrollTop = panel.scrollHeight;
+      console.log('[TAR]', msg);
+    }
+
+    // ============================================================
+    // API — direct fetch with proper CORS handling for Apps Script
+    //
+    // Google Apps Script (deployed as "Execute as Me, Anyone incl. anon")
+    // supports CORS natively — but ONLY for GET requests returning
+    // ContentService text/json. For POST it also works if the script
+    // adds the right headers in doPost().
+    //
+    // Strategy:
+    //   1. Try direct fetch (no proxy) — works if your GAS has CORS headers.
+    //   2. If that fails with a network/CORS error, fall back to JSONP for
+    //      GET requests (Apps Script supports ?callback=).
+    //   3. POST actions fall back to a redirect trick via a hidden form.
+    // ============================================================
+
+    function buildUrl(action, params) {
+      var url = API_URL + '?action=' + encodeURIComponent(action);
+      if (params) {
+        Object.keys(params).forEach(function(k) {
+          url += '&' + encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
+        });
+      }
+      return url;
+    }
+
+    // --- GET via direct fetch, fallback to JSONP ---
     function apiGet(action, params) {
-      return new Promise(function(resolve, reject) {
-        var url = API_URL + '?action=' + action;
-        if (params) {
-          for (var key in params) {
-            url += '&' + key + '=' + encodeURIComponent(params[key]);
-          }
-        }
-        
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url, true);
-        xhr.onload = function() {
-          try {
-            resolve(JSON.parse(xhr.responseText));
-          } catch (e) {
-            reject({ message: 'Failed to parse response' });
-          }
-        };
-        xhr.onerror = function() {
-          reject({ message: 'Network error: ' + xhr.statusText });
-        };
-        xhr.send();
+      var url = buildUrl(action, params);
+      dbg('GET ' + action + ' → direct fetch', 'info');
+
+      return fetch(url, {
+        method: 'GET',
+        redirect: 'follow'
+        // No custom headers — triggers preflight, which GAS can't handle
+      })
+      .then(function(res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.text();
+      })
+      .then(function(text) {
+        dbg('GET response: ' + text.substring(0, 120), 'success');
+        return JSON.parse(text);
+      })
+      .catch(function(err) {
+        dbg('Direct fetch failed (' + err.message + '), trying JSONP…', 'error');
+        return apiGetJsonp(action, params);
       });
     }
-    
+
+    // JSONP fallback for GET (Apps Script supports ?callback=fnName)
+    function apiGetJsonp(action, params) {
+      return new Promise(function(resolve, reject) {
+        var cbName = 'cb_' + Date.now() + '_' + Math.floor(Math.random() * 9999);
+        var url = buildUrl(action, params) + '&callback=' + cbName;
+        var timeout;
+
+        window[cbName] = function(data) {
+          clearTimeout(timeout);
+          delete window[cbName];
+          document.body.removeChild(script);
+          dbg('JSONP success', 'success');
+          resolve(data);
+        };
+
+        timeout = setTimeout(function() {
+          delete window[cbName];
+          if (script.parentNode) document.body.removeChild(script);
+          dbg('JSONP timeout', 'error');
+          reject({ message: 'Request timed out. Check your network and that the Apps Script is deployed as "Anyone, even anonymous".' });
+        }, 15000);
+
+        var script = document.createElement('script');
+        script.src = url;
+        script.onerror = function() {
+          clearTimeout(timeout);
+          delete window[cbName];
+          if (script.parentNode) document.body.removeChild(script);
+          dbg('JSONP script load error', 'error');
+          reject({ message: 'Could not reach the booking server. Check that the script URL is correct and deployed publicly.' });
+        };
+        document.body.appendChild(script);
+      });
+    }
+
+    // --- POST via direct fetch ---
+    // Apps Script needs doPost() to return with CORS headers.
+    // We send JSON in the body.
     function apiPost(action, data) {
-      return new Promise(function(resolve, reject) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', API_URL + '?action=' + action, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onload = function() {
-          try {
-            resolve(JSON.parse(xhr.responseText));
-          } catch (e) {
-            reject({ message: 'Failed to parse response' });
-          }
-        };
-        xhr.onerror = function() {
-          reject({ message: 'Network error: ' + xhr.statusText });
-        };
-        xhr.send(JSON.stringify(data));
+      var url = API_URL + '?action=' + encodeURIComponent(action);
+      dbg('POST ' + action, 'info');
+
+      return fetch(url, {
+        method: 'POST',
+        redirect: 'follow',
+        body: JSON.stringify(data)
+        // No Content-Type header — avoids preflight.
+        // GAS receives it as a plain text body; parse with JSON.parse(e.postData.contents)
+      })
+      .then(function(res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.text();
+      })
+      .then(function(text) {
+        dbg('POST response: ' + text.substring(0, 120), 'success');
+        try { return JSON.parse(text); }
+        catch(e) { throw new Error('Bad JSON from server: ' + text.substring(0, 80)); }
+      })
+      .catch(function(err) {
+        dbg('POST failed: ' + err.message, 'error');
+        // Last-resort: encode POST data as GET params (works for simple actions)
+        dbg('Retrying as GET with params…', 'info');
+        var params = Object.assign({ _method: 'POST' }, data);
+        return apiGet(action, params);
       });
     }
-    
+
     // ============================================================
     // TAB SWITCHING
     // ============================================================
-    
     function switchTab(tab) {
       document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
-      document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
-      hide('scannerTab');
-      hide('manualTab');
-      hide('manifestTab');
+      var id = 'tab' + tab.charAt(0).toUpperCase() + tab.slice(1);
+      document.getElementById(id).classList.add('active');
+      hide('scannerTab'); hide('manualTab'); hide('manifestTab');
       show(tab + 'Tab');
-      if (tab === 'manifest') { loadManifest(); }
+      if (tab === 'manifest') loadManifest();
     }
-    
+
     // ============================================================
-    // SCANNER FUNCTIONS
+    // SCANNER
     // ============================================================
-    
     function startScanner() {
-      driverName = document.getElementById("driverNameScanner").value.trim();
-      if (!driverName) { showToast("Please enter your name first!"); return; }
+      driverName = document.getElementById('driverNameScanner').value.trim();
+      if (!driverName) { showToast('Please enter your name first!'); return; }
       localStorage.setItem('takealot_driver_name', driverName);
-      document.getElementById("driverNameManual").value = driverName;
-      show("scannerCard");
-      hide("driverCardScanner");
-      html5QrCode = new Html5Qrcode("reader");
-      
+      document.getElementById('driverNameManual').value = driverName;
+      show('scannerCard');
+      hide('driverCardScanner');
+      html5QrCode = new Html5Qrcode('reader');
       var config = { fps: 10, qrbox: { width: 250, height: 250 } };
-      var backCamera = { facingMode: "environment" };
-      var frontCamera = { facingMode: "user" };
-      
-      html5QrCode.start(backCamera, config, onScanSuccess, onScanFailure)
-        .catch(function(err) {
-          console.log("Back camera failed, trying front camera: " + err);
-          html5QrCode.start(frontCamera, config, onScanSuccess, onScanFailure)
-            .catch(function(err2) {
-              hide("scannerCard");
-              show("driverCardScanner");
-              showToast("Camera error: " + (err2.message || err2));
+      html5QrCode.start({ facingMode: 'environment' }, config, onScanSuccess, function(){})
+        .catch(function() {
+          html5QrCode.start({ facingMode: 'user' }, config, onScanSuccess, function(){})
+            .catch(function(e) {
+              hide('scannerCard'); show('driverCardScanner');
+              showToast('Camera error: ' + (e.message || e));
             });
         });
     }
-    
+
     function stopScanner() {
       if (html5QrCode) {
         html5QrCode.stop().then(function() {
           html5QrCode = null;
-          hide("scannerCard");
-          show("driverCardScanner");
-        }).catch(function(e) {});
+          hide('scannerCard');
+          show('driverCardScanner');
+        }).catch(function(){});
       }
     }
-    
+
     function onScanSuccess(decodedText) {
       html5QrCode.stop().then(function() {
         html5QrCode = null;
-        hide("scannerCard");
+        hide('scannerCard');
         currentBookingId = decodedText.trim().toUpperCase();
         lookupBooking(currentBookingId, 'scanner');
-      }).catch(function(e) {});
+      }).catch(function(){});
     }
-    function onScanFailure(error) {}
-    
+
     // ============================================================
     // LOOKUP & ACTIONS
     // ============================================================
-    
     function manualLookup() {
-      driverName = document.getElementById("driverNameManual").value.trim();
-      if (!driverName) { showToast("Please enter your name first!"); return; }
+      driverName = document.getElementById('driverNameManual').value.trim();
+      if (!driverName) { showToast('Please enter your name first!'); return; }
       localStorage.setItem('takealot_driver_name', driverName);
-      document.getElementById("driverNameScanner").value = driverName;
-      var bookingId = document.getElementById("manualId").value.trim().toUpperCase();
-      if (!bookingId) { showToast("Please enter a Booking ID!"); return; }
+      document.getElementById('driverNameScanner').value = driverName;
+      var bookingId = document.getElementById('manualId').value.trim().toUpperCase();
+      if (!bookingId) { showToast('Please enter a Booking ID!'); return; }
       currentBookingId = bookingId;
       lookupBooking(bookingId, 'manual');
     }
-    
+
     function lookupBooking(bookingId, mode) {
       showLoading(mode);
       apiGet('lookupBooking', { bookingId: bookingId })
@@ -615,111 +668,127 @@
         })
         .catch(function(err) {
           hideLoading(mode);
-          showToast("Error: " + (err.message || JSON.stringify(err)));
+          dbg('lookupBooking error: ' + err.message, 'error');
+          showToast('⚠️ ' + (err.message || 'Unknown error. Check connection.'));
         });
     }
-    
+
     function showResult(result, mode) {
-      var card = document.getElementById("resultCard" + (mode === 'manual' ? 'Manual' : ''));
+      var sfx = mode === 'manual' ? 'Manual' : '';
+      var card = document.getElementById('resultCard' + sfx);
+
       if (!result.found) {
-        card.className = "result-card result-invalid";
-        card.innerHTML = '<div class="result-header"><div class="result-icon">✕</div><div><div class="result-title">NOT FOUND</div><div class="result-subtitle">' + currentBookingId + '</div></div></div><p>No booking found.</p>';
-        showResultCard(card, mode);
-        showResetCard(card, mode);
+        card.className = 'result-card result-invalid';
+        card.innerHTML = '<div class="result-header"><div class="result-icon">✕</div><div><div class="result-title">NOT FOUND</div><div class="result-subtitle">' + currentBookingId + '</div></div></div><p>No booking found with this ID.</p>';
+        card.classList.remove('hidden');
+        showReset(mode);
         return;
       }
-      var alreadyBoarded = result.scannerStatus && result.scannerStatus !== '';
-      if (alreadyBoarded) {
-        card.className = "result-card result-already";
-        card.innerHTML = '<div class="result-header"><div class="result-icon">⚠️</div><div><div class="result-title">ALREADY SCANNED</div><div class="result-subtitle">' + result.bookingId + '</div></div></div><div class="details-list"><div class="detail-item"><span class="detail-label">Passenger</span><span class="detail-value">' + result.passengerName + '</span></div><div class="detail-item"><span class="detail-label">Status</span><span class="detail-value">' + result.scannerStatus + '</span></div><div class="detail-item"><span class="detail-label">Driver</span><span class="detail-value">' + result.scannerDriver + '</span></div><div class="detail-item"><span class="detail-label">Time</span><span class="detail-value">' + result.scannerTime + '</span></div></div>';
-        showResultCard(card, mode);
-        showResetCard(card, mode);
-        vibrate([200, 100, 200]);
+
+      if (result.scannerStatus && result.scannerStatus !== '') {
+        card.className = 'result-card result-already';
+        card.innerHTML = '<div class="result-header"><div class="result-icon">⚠️</div><div><div class="result-title">ALREADY SCANNED</div><div class="result-subtitle">' + result.bookingId + '</div></div></div>' +
+          detailsHTML([
+            ['Passenger', result.passengerName],
+            ['Status', result.scannerStatus],
+            ['Driver', result.scannerDriver],
+            ['Time', result.scannerTime]
+          ]);
+        card.classList.remove('hidden');
+        showReset(mode);
+        vibrate([200,100,200]);
         return;
       }
-      card.className = "result-card result-valid";
-      card.innerHTML = '<div class="result-header"><div class="result-icon">✓</div><div><div class="result-title">VALID BOOKING</div><div class="result-subtitle">' + result.bookingId + '</div></div></div><div class="details-list"><div class="detail-item"><span class="detail-label">Passenger</span><span class="detail-value">' + result.passengerName + '</span></div><div class="detail-item"><span class="detail-label">Brand</span><span class="detail-value">' + result.brand + '</span></div><div class="detail-item"><span class="detail-label">Department</span><span class="detail-value">' + result.department + '</span></div><div class="detail-item"><span class="detail-label">Destination</span><span class="detail-value">' + result.destination + '</span></div><div class="detail-item"><span class="detail-label">Shift End</span><span class="detail-value">' + result.shiftEnd + '</span></div><div class="detail-item"><span class="detail-label">Transport Date</span><span class="detail-value">' + result.transportDate + '</span></div></div>';
-      showResultCard(card, mode);
-      showActionCard(mode);
+
+      card.className = 'result-card result-valid';
+      card.innerHTML = '<div class="result-header"><div class="result-icon">✓</div><div><div class="result-title">VALID BOOKING</div><div class="result-subtitle">' + result.bookingId + '</div></div></div>' +
+        detailsHTML([
+          ['Passenger', result.passengerName],
+          ['Brand', result.brand],
+          ['Department', result.department],
+          ['Destination', result.destination],
+          ['Shift End', result.shiftEnd],
+          ['Transport Date', result.transportDate]
+        ]);
+      card.classList.remove('hidden');
+      document.getElementById('actionCard' + sfx).classList.remove('hidden');
       vibrate([100]);
     }
-    
-    function showResultCard(card, mode) { hideLoading(mode); hideActionCard(mode); hideSuccessCard(mode); hideResetCard(mode); card.classList.remove('hidden'); }
-    function showActionCard(mode) { document.getElementById("actionCard" + (mode === 'manual' ? 'Manual' : '')).classList.remove('hidden'); }
-    function hideActionCard(mode) { var c = document.getElementById("actionCard" + (mode === 'manual' ? 'Manual' : '')); if (c) c.classList.add('hidden'); }
-    function showSuccessCard(mode) { document.getElementById("successCard" + (mode === 'manual' ? 'Manual' : '')).classList.remove('hidden'); }
-    function hideSuccessCard(mode) { var c = document.getElementById("successCard" + (mode === 'manual' ? 'Manual' : '')); if (c) c.classList.add('hidden'); }
-    function showResetCard(card, mode) { var r = document.getElementById("resetCard" + (mode === 'manual' ? 'Manual' : '')); if (r) r.classList.remove('hidden'); }
-    function hideResetCard(mode) { var r = document.getElementById("resetCard" + (mode === 'manual' ? 'Manual' : '')); if (r) r.classList.add('hidden'); }
-    function showLoading(mode) { document.getElementById(mode === 'manual' ? "loadingCardManual" : "loadingCard").classList.remove('hidden'); }
-    function hideLoading(mode) { document.getElementById(mode === 'manual' ? "loadingCardManual" : "loadingCard").classList.add('hidden'); }
-    
+
+    function detailsHTML(rows) {
+      return '<div class="details-list">' + rows.map(function(r) {
+        return '<div class="detail-item"><span class="detail-label">' + r[0] + '</span><span class="detail-value">' + (r[1] || '—') + '</span></div>';
+      }).join('') + '</div>';
+    }
+
     function doBoard() { doBoardAction('scanner'); }
     function doBoardManual() { doBoardAction('manual'); }
     function doBoardAction(mode) {
-      hideActionCard(mode);
+      var sfx = mode === 'manual' ? 'Manual' : '';
+      document.getElementById('actionCard' + sfx).classList.add('hidden');
       showLoading(mode);
       apiPost('boardPassenger', { bookingId: currentBookingId, driverName: driverName })
         .then(function(res) {
           hideLoading(mode);
           if (res.success) {
-            showSuccess("✅ Boarded!", "Passenger has been marked as boarded.", "#d1e7dd", "#155724", res.timestamp, mode);
-            vibrate([100, 50, 100, 50, 200]);
+            showSuccess('✅ Boarded!', 'Passenger marked as boarded.', '#d1e7dd', '#155724', res.timestamp, mode);
+            vibrate([100,50,100,50,200]);
           } else {
-            showToast("Error: " + res.message);
-            showActionCard(mode);
+            showToast('Error: ' + res.message);
+            document.getElementById('actionCard' + sfx).classList.remove('hidden');
           }
         })
         .catch(function(err) {
           hideLoading(mode);
-          showToast("Error: " + (err.message || JSON.stringify(err)));
-          showActionCard(mode);
+          showToast('⚠️ ' + (err.message || 'Network error'));
+          document.getElementById('actionCard' + sfx).classList.remove('hidden');
         });
     }
-    
+
     function confirmNoShow() { confirmNoShowAction('scanner'); }
     function confirmNoShowManual() { confirmNoShowAction('manual'); }
     function confirmNoShowAction(mode) {
-      if (confirm('Mark ' + currentResult.passengerName + ' as No Show?')) {
+      if (currentResult && confirm('Mark ' + currentResult.passengerName + ' as No Show?')) {
         doNoShowAction(mode);
       }
     }
     function doNoShowAction(mode) {
-      hideActionCard(mode);
+      var sfx = mode === 'manual' ? 'Manual' : '';
+      document.getElementById('actionCard' + sfx).classList.add('hidden');
       showLoading(mode);
       apiPost('markNoShow', { bookingId: currentBookingId, driverName: driverName })
         .then(function(res) {
           hideLoading(mode);
           if (res.success) {
-            showSuccess("🔴 No Show", "Passenger has been marked as absent.", "#f8d7da", "#842029", res.timestamp, mode);
-            vibrate([200, 100, 200]);
+            showSuccess('🔴 No Show', 'Passenger marked as absent.', '#f8d7da', '#842029', res.timestamp, mode);
+            vibrate([200,100,200]);
           } else {
-            showToast("Error: " + res.message);
-            showActionCard(mode);
+            showToast('Error: ' + res.message);
+            document.getElementById('actionCard' + sfx).classList.remove('hidden');
           }
         })
         .catch(function(err) {
           hideLoading(mode);
-          showToast("Error: " + (err.message || JSON.stringify(err)));
-          showActionCard(mode);
+          showToast('⚠️ ' + (err.message || 'Network error'));
+          document.getElementById('actionCard' + sfx).classList.remove('hidden');
         });
     }
-    
+
     function showSuccess(title, message, bg, color, timestamp, mode) {
-      var card = document.getElementById("successCard" + (mode === 'manual' ? 'Manual' : ''));
+      var sfx = mode === 'manual' ? 'Manual' : '';
+      var card = document.getElementById('successCard' + sfx);
       card.style.background = bg;
       card.style.color = color;
-      card.className = "success-message";
-      card.innerHTML = '<div class="success-icon">✓</div><div class="success-title">' + title + '</div><div class="success-text">' + message + '</div><div class="success-time">Time: ' + timestamp + '</div>';
+      card.style.border = '2px solid ' + color;
+      card.className = 'success-message';
+      card.innerHTML = '<div class="success-icon">✓</div><div class="success-title" style="color:' + color + '">' + title + '</div><div class="success-text">'+message+'</div><div class="success-time">Time: ' + (timestamp || new Date().toLocaleTimeString()) + '</div>';
       card.classList.remove('hidden');
-      var r = document.getElementById("resetCard" + (mode === 'manual' ? 'Manual' : ''));
-      if (r) r.classList.remove('hidden');
+      showReset(mode);
     }
-    
+
     // ============================================================
     // MANIFEST
     // ============================================================
-    
     function loadManifest() {
       var list = document.getElementById('manifestList');
       list.innerHTML = '<div class="loading"><div class="spinner"></div><div class="loading-text">Loading manifest...</div></div>';
@@ -729,10 +798,10 @@
           renderManifest();
         })
         .catch(function(err) {
-          list.innerHTML = '<p style="color:var(--danger);text-align:center;">Error: ' + (err.message || JSON.stringify(err)) + '</p>';
+          list.innerHTML = '<p style="color:var(--danger);text-align:center;padding:20px;">⚠️ ' + (err.message || 'Could not load manifest') + '</p>';
         });
     }
-    
+
     function renderManifest() {
       var list = document.getElementById('manifestList');
       var total = manifestData.length;
@@ -740,48 +809,53 @@
       document.getElementById('totalCount').textContent = total;
       document.getElementById('boardedCount').textContent = boarded;
       document.getElementById('pendingCount').textContent = total - boarded;
-      if (manifestData.length === 0) {
+      if (total === 0) {
         list.innerHTML = '<p style="text-align:center;color:var(--gray-500);padding:20px;">No bookings for today</p>';
         return;
       }
       list.innerHTML = manifestData.map(function(b) {
-        var statusClass = b.scannerStatus ? (b.scannerStatus.includes('Boarded') ? 'boarded' : 'noshow') : '';
-        var statusText = b.scannerStatus ? b.scannerStatus : 'Pending';
-        var statusBadge = b.scannerStatus ? (b.scannerStatus.includes('Boarded') ? 'status-boarded' : 'status-noshow') : 'status-pending';
-        return '<div class="passenger-card ' + statusClass + '" onclick="selectPassenger(\'' + b.bookingId + '\')"><div class="passenger-header"><div class="passenger-name">' + b.passengerName + '</div><div class="passenger-status ' + statusBadge + '">' + statusText + '</div></div><div class="passenger-details"><div class="passenger-detail"><span>Destination:</span> ' + b.destination + '</div><div class="passenger-detail"><span>Shift End:</span> ' + b.shiftEnd + '</div><div class="passenger-detail"><span>Brand:</span> ' + b.brand + '</div><div class="passenger-detail"><span>ID:</span> ' + b.bookingId + '</div></div></div>';
+        var sc = b.scannerStatus ? (b.scannerStatus.includes('Boarded') ? 'boarded' : 'noshow') : '';
+        var st = b.scannerStatus || 'Pending';
+        var sb = b.scannerStatus ? (b.scannerStatus.includes('Boarded') ? 'status-boarded' : 'status-noshow') : 'status-pending';
+        return '<div class="passenger-card ' + sc + '" onclick="selectPassenger(\'' + b.bookingId + '\')">' +
+          '<div class="passenger-header"><div class="passenger-name">' + b.passengerName + '</div><div class="passenger-status ' + sb + '">' + st + '</div></div>' +
+          '<div class="passenger-details">' +
+          '<div class="passenger-detail"><span>Destination:</span> ' + (b.destination||'—') + '</div>' +
+          '<div class="passenger-detail"><span>Shift End:</span> ' + (b.shiftEnd||'—') + '</div>' +
+          '<div class="passenger-detail"><span>Brand:</span> ' + (b.brand||'—') + '</div>' +
+          '<div class="passenger-detail"><span>ID:</span> ' + b.bookingId + '</div>' +
+          '</div></div>';
       }).join('');
     }
-    
+
     function selectPassenger(bookingId) {
       currentBookingId = bookingId;
-      document.getElementById("manualId").value = bookingId;
+      document.getElementById('manualId').value = bookingId;
       switchTab('manual');
     }
-    
+
     // ============================================================
     // RESET & UTILITIES
     // ============================================================
-    
-    function resetUI() { resetCommon('scanner'); show("driverCardScanner"); }
-    function resetUIManual() { resetCommon('manual'); document.getElementById("manualId").value = ""; show("driverCardManual"); }
+    function resetUI() { resetCommon('scanner'); show('driverCardScanner'); }
+    function resetUIManual() { resetCommon('manual'); document.getElementById('manualId').value = ''; show('driverCardManual'); }
     function resetCommon(mode) {
-      currentBookingId = "";
-      currentResult = null;
-      var c = document.getElementById("resultCard" + (mode === 'manual' ? 'Manual' : ''));
-      if (c) c.classList.add('hidden');
-      hideActionCard(mode);
-      hideSuccessCard(mode);
-      hideResetCard(mode);
+      var sfx = mode === 'manual' ? 'Manual' : '';
+      currentBookingId = ''; currentResult = null;
+      var c = document.getElementById('resultCard' + sfx); if (c) c.classList.add('hidden');
+      var a = document.getElementById('actionCard' + sfx); if (a) a.classList.add('hidden');
+      var s = document.getElementById('successCard' + sfx); if (s) s.classList.add('hidden');
+      var r = document.getElementById('resetCard' + sfx); if (r) r.classList.add('hidden');
     }
-    
-    function showToast(message) {
-      var t = document.createElement("div");
-      t.className = "toast";
-      t.textContent = message;
+    function showReset(mode) { var r = document.getElementById('resetCard' + (mode==='manual'?'Manual':'')); if (r) r.classList.remove('hidden'); }
+    function showLoading(mode) { document.getElementById(mode==='manual'?'loadingCardManual':'loadingCard').classList.remove('hidden'); }
+    function hideLoading(mode) { document.getElementById(mode==='manual'?'loadingCardManual':'loadingCard').classList.add('hidden'); }
+    function showToast(msg) {
+      var t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
       document.body.appendChild(t);
-      setTimeout(function() { t.remove(); }, 3000);
+      setTimeout(function() { t.remove(); }, 4000);
     }
-    function vibrate(pattern) { if ('vibrate' in navigator) { navigator.vibrate(pattern); } }
+    function vibrate(p) { if ('vibrate' in navigator) navigator.vibrate(p); }
     function show(id) { document.getElementById(id).classList.remove('hidden'); }
     function hide(id) { document.getElementById(id).classList.add('hidden'); }
   </script>
