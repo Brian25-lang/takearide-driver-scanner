@@ -140,9 +140,21 @@
     .result-invalid .result-title { color: var(--danger); }
     .result-already .result-title { color: #856404; }
     .result-subtitle { font-size: 13px; color: var(--gray-500); }
+    .route-pill {
+      display: inline-block;
+      background: #1F4E79;
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      padding: 5px 12px;
+      border-radius: 14px;
+      margin-bottom: 16px;
+    }
     .details-list { background: white; border-radius: 12px; overflow: hidden; }
     .detail-item { display: flex; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--gray-200); }
     .detail-item:last-child { border-bottom: none; }
+    .detail-item.route-highlight { background: #eef4fb; }
     .detail-label { font-size: 14px; color: var(--gray-500); }
     .detail-value { font-size: 14px; font-weight: 600; color: var(--dark); text-align: right; }
     .manifest-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
@@ -151,6 +163,21 @@
     .stat-label { font-size: 10px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
     .stat-box.success .stat-number { color: var(--success); }
     .stat-box.warning .stat-number { color: var(--danger); }
+    .route-group-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      margin: 18px 0 10px;
+      background: #1F4E79;
+      color: white;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+    .route-group-header:first-child { margin-top: 0; }
+    .route-group-count { background: rgba(255,255,255,0.2); padding: 2px 10px; border-radius: 12px; font-size: 11px; }
     .passenger-card {
       background: white;
       border-radius: 12px;
@@ -377,7 +404,7 @@
 
       <!-- Debug panel (tap version label 5× to reveal) -->
       <div style="text-align:center;margin-top:8px;">
-        <span id="debugToggle" onclick="tapDebug()" style="font-size:11px;color:var(--gray-300);cursor:pointer;user-select:none;">v1.2.0</span>
+        <span id="debugToggle" onclick="tapDebug()" style="font-size:11px;color:var(--gray-300);cursor:pointer;user-select:none;">v1.3.0</span>
       </div>
       <div id="debugPanel" class="debug-panel"></div>
     </div>
@@ -407,7 +434,7 @@
       </div>
 
       <div class="card">
-        <div class="card-title">Passengers to Board</div>
+        <div class="card-title">Passengers to Board — grouped by Route</div>
         <div id="manifestList">
           <div class="loading">
             <div class="spinner"></div>
@@ -430,7 +457,7 @@
     // Change ONLY the API_URL if your Apps Script URL changes.
     // DO NOT change anything else unless you know what you're doing.
     // ============================================================
-    var API_URL = 'https://script.google.com/macros/s/AKfycbwOTDEYCcGXdLO7wWfORS5GWZ_eSjFgU9umkgMLiUtf5vM1K0AkbOEXjfER6gQWW-Hx3A/exec';
+    var API_URL = 'https://script.google.com/a/macros/takealot.com/s/AKfycbwTvwYhrWQK7qwKvIKbllnR2qfTHZkwN53QP_KtcYugtnSiuTeeSJaL7wRiLMtSmdqN/exec';
 
     // ============================================================
     // STATE
@@ -688,8 +715,11 @@
       if (result.scannerStatus && result.scannerStatus !== '') {
         card.className = 'result-card result-already';
         card.innerHTML = '<div class="result-header"><div class="result-icon">⚠️</div><div><div class="result-title">ALREADY SCANNED</div><div class="result-subtitle">' + result.bookingId + '</div></div></div>' +
+          routePillHTML(result.routeGroup) +
           detailsHTML([
             ['Passenger', result.passengerName],
+            ['Destination', result.destination],
+            ['Route Group', result.routeGroup],
             ['Status', result.scannerStatus],
             ['Driver', result.scannerDriver],
             ['Time', result.scannerTime]
@@ -702,11 +732,13 @@
 
       card.className = 'result-card result-valid';
       card.innerHTML = '<div class="result-header"><div class="result-icon">✓</div><div><div class="result-title">VALID BOOKING</div><div class="result-subtitle">' + result.bookingId + '</div></div></div>' +
+        routePillHTML(result.routeGroup) +
         detailsHTML([
           ['Passenger', result.passengerName],
           ['Brand', result.brand],
           ['Department', result.department],
           ['Destination', result.destination],
+          ['Route Group', result.routeGroup],
           ['Shift End', result.shiftEnd],
           ['Transport Date', result.transportDate]
         ]);
@@ -715,9 +747,15 @@
       vibrate([100]);
     }
 
+    function routePillHTML(routeGroup) {
+      if (!routeGroup) return '';
+      return '<div class="route-pill">🚐 ' + routeGroup + '</div>';
+    }
+
     function detailsHTML(rows) {
       return '<div class="details-list">' + rows.map(function(r) {
-        return '<div class="detail-item"><span class="detail-label">' + r[0] + '</span><span class="detail-value">' + (r[1] || '—') + '</span></div>';
+        var highlight = r[0] === 'Route Group' ? ' route-highlight' : '';
+        return '<div class="detail-item' + highlight + '"><span class="detail-label">' + r[0] + '</span><span class="detail-value">' + (r[1] || '—') + '</span></div>';
       }).join('') + '</div>';
     }
 
@@ -787,7 +825,7 @@
     }
 
     // ============================================================
-    // MANIFEST
+    // MANIFEST — grouped by Route Group
     // ============================================================
     function loadManifest() {
       var list = document.getElementById('manifestList');
@@ -813,19 +851,38 @@
         list.innerHTML = '<p style="text-align:center;color:var(--gray-500);padding:20px;">No bookings for today</p>';
         return;
       }
-      list.innerHTML = manifestData.map(function(b) {
-        var sc = b.scannerStatus ? (b.scannerStatus.includes('Boarded') ? 'boarded' : 'noshow') : '';
-        var st = b.scannerStatus || 'Pending';
-        var sb = b.scannerStatus ? (b.scannerStatus.includes('Boarded') ? 'status-boarded' : 'status-noshow') : 'status-pending';
-        return '<div class="passenger-card ' + sc + '" onclick="selectPassenger(\'' + b.bookingId + '\')">' +
-          '<div class="passenger-header"><div class="passenger-name">' + b.passengerName + '</div><div class="passenger-status ' + sb + '">' + st + '</div></div>' +
-          '<div class="passenger-details">' +
-          '<div class="passenger-detail"><span>Destination:</span> ' + (b.destination||'—') + '</div>' +
-          '<div class="passenger-detail"><span>Shift End:</span> ' + (b.shiftEnd||'—') + '</div>' +
-          '<div class="passenger-detail"><span>Brand:</span> ' + (b.brand||'—') + '</div>' +
-          '<div class="passenger-detail"><span>ID:</span> ' + b.bookingId + '</div>' +
-          '</div></div>';
-      }).join('');
+
+      // Group passengers by Route Group so drivers see who travels together.
+      // The backend already sorts by routeGroup then shiftEnd, but we
+      // re-group defensively here in case data arrives unsorted.
+      var groups = {};
+      var groupOrder = [];
+      manifestData.forEach(function(b) {
+        var key = b.routeGroup || 'Unmapped — please assign a route';
+        if (!groups[key]) { groups[key] = []; groupOrder.push(key); }
+        groups[key].push(b);
+      });
+
+      var html = '';
+      groupOrder.forEach(function(key) {
+        var members = groups[key];
+        html += '<div class="route-group-header"><span>🚐 ' + key + '</span><span class="route-group-count">' + members.length + ' pax</span></div>';
+        html += members.map(function(b) {
+          var sc = b.scannerStatus ? (b.scannerStatus.includes('Boarded') ? 'boarded' : 'noshow') : '';
+          var st = b.scannerStatus || 'Pending';
+          var sb = b.scannerStatus ? (b.scannerStatus.includes('Boarded') ? 'status-boarded' : 'status-noshow') : 'status-pending';
+          return '<div class="passenger-card ' + sc + '" onclick="selectPassenger(\'' + b.bookingId + '\')">' +
+            '<div class="passenger-header"><div class="passenger-name">' + b.passengerName + '</div><div class="passenger-status ' + sb + '">' + st + '</div></div>' +
+            '<div class="passenger-details">' +
+            '<div class="passenger-detail"><span>Destination:</span> ' + (b.destination||'—') + '</div>' +
+            '<div class="passenger-detail"><span>Shift End:</span> ' + (b.shiftEnd||'—') + '</div>' +
+            '<div class="passenger-detail"><span>Brand:</span> ' + (b.brand||'—') + '</div>' +
+            '<div class="passenger-detail"><span>ID:</span> ' + b.bookingId + '</div>' +
+            '</div></div>';
+        }).join('');
+      });
+
+      list.innerHTML = html;
     }
 
     function selectPassenger(bookingId) {
